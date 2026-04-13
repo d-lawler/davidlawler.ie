@@ -1,0 +1,32 @@
+@use 'variables' as *;
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-inline: $grid-margin;
+  padding-block: $padding-y;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-inline: calc($grid-gutter / -2);
+}
+
+.col {
+  flex: 1 1 0%;
+  padding-inline: calc($grid-gutter / 2);
+}
+
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 auto;
+    width: calc(100% / $grid-columns * $i);
+    padding-inline: calc($grid-gutter / 2);
+  }
+
+  .offset-#{$i} {
+    margin-left: calc(100% / $grid-columns * $i);
+  }
+}
