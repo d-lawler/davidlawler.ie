@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+html {
+  font-size: clamp(24px, 4vw, 120px);
+  background-color: $color-bg;
+  color: $color-text;
+  font-family: $font-family;
+  font-weight: 350;
+  line-height: 1.12;
+
+  @media (max-width: 768px) {
+    line-height: 1.4;
+  }
+}
+
+::selection {
+  background-color: $color-text;
+  color: $color-bg;
+}
+
+a {
+  border-bottom: 1px solid $color-text;
+
+  @media (max-width: 768px) {
+    border-bottom: none;
+  }
+}

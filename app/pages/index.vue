@@ -27,6 +27,27 @@ function formatCity(timeZone: string) {
 
 const london = computed(() => formatCity('Europe/London'))
 const dublin = computed(() => formatCity('Europe/Dublin'))
+
+const emojis = ['✅', '🤙', '☮️', '🧪', '🆒', '✨', '⚛️', '👽']
+const emojiIndex = ref(0)
+
+onMounted(() => {
+    setInterval(() => {
+        emojiIndex.value = (emojiIndex.value + 1) % emojis.length
+    }, 500)
+})
+
+const currentEmoji = computed(() => emojis[emojiIndex.value])
+
+const emailCopied = ref(false)
+
+async function copyEmail() {
+    await navigator.clipboard.writeText('david@davidlawler.ie')
+    emailCopied.value = true
+    setTimeout(() => {
+        emailCopied.value = false
+    }, 2000)
+}
 </script>
 
 <template>
@@ -34,8 +55,9 @@ const dublin = computed(() => formatCity('Europe/Dublin'))
         <Transition name="fade" mode="out-in">
             <p v-if="!showSecond" key="first">David Lawler</p>
             <p v-else key="second">
-                Creative director and technologist working across Identities, Campaigns, and Digital Experiences, for clients in arts, culture, and
-                technology. Currently at Google Brand Studio EMEA <span class="items-italic">(via YunoJuno)</span>, always at <a href="https:www.r-a-d.site">Research&nbsp;and&nbsp;Destroy</a>.
+                Creative Director <span class="items-italic">&amp;</span> Technologist, working across Identity, Digital Experience, and Campaigns, for international clients in the Arts, Culture, and
+                Technology. Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>, always at <a href="https:www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.<br>
+                <span class="email-line">Feel free to <Transition name="fade" mode="out-in"><a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">e-mail me</a><span v-else key="copied" class="items-italic">e-mail copied</span></Transition><Transition name="fade"><span v-if="!emailCopied" class="emoji-dot">{{ currentEmoji }}</span></Transition></span>
             </p>
         </Transition>
         <Transition name="fade" mode="out-in">
@@ -57,61 +79,3 @@ const dublin = computed(() => formatCity('Europe/Dublin'))
         </Transition>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.8s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-.clocks {
-    font-size: 1rem;
-    display: flex;
-    align-items: baseline;
-    gap: 1em;
-
-    @media (min-width: 769px) {
-        font-size: 24px;
-        gap: 2em;
-    }
-    position: fixed;
-    bottom: $grid-gutter;
-    left: $grid-margin;
-    right: $grid-margin;
-}
-
-.clock-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.3em;
-
-    @media (min-width: 769px) {
-        gap: 0.5em;
-    }
-}
-
-.clock-time {
-    font-family: $font-family-mono;
-}
-
-.full {
-    display: none;
-
-    @media (min-width: 769px) {
-        display: inline;
-    }
-}
-
-.abbr {
-    display: inline;
-
-    @media (min-width: 769px) {
-        display: none;
-    }
-}
-</style>

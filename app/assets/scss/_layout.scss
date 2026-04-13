@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: calc($grid-gutter - 10px) $grid-gutter 0;
+
+  @media (max-width: 768px) {
+    padding: 10px 10px 0;
+  }
+}
