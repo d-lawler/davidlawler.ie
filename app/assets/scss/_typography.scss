@@ -17,14 +17,3 @@
     left: 10px;
   }
 }
-
-.emoji-dot {
-  display: inline-block;
-  font-size: 0.35em;
-  vertical-align: baseline;
-  margin-left: 0.4em;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}

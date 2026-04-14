@@ -28,16 +28,6 @@ function formatCity(timeZone: string) {
 const london = computed(() => formatCity('Europe/London'))
 const dublin = computed(() => formatCity('Europe/Dublin'))
 
-const emojis = ['✅', '🤙', '☮️', '🧪', '🆒', '✨', '⚛️', '👽']
-const emojiIndex = ref(0)
-
-onMounted(() => {
-    setInterval(() => {
-        emojiIndex.value = (emojiIndex.value + 1) % emojis.length
-    }, 500)
-})
-
-const currentEmoji = computed(() => emojis[emojiIndex.value])
 
 const emailCopied = ref(false)
 
@@ -57,7 +47,7 @@ async function copyEmail() {
             <p v-else key="second">
                 Creative Director <span class="items-italic">&amp;</span> Technologist, working across Identity, Digital Experience, and Campaigns, for international clients in the Arts, Culture, and
                 Technology. Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>, always at <a href="https:www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.<br>
-                <span class="email-line">Feel free to <Transition name="fade" mode="out-in"><a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">e-mail me</a><span v-else key="copied" class="items-italic">e-mail copied</span></Transition><Transition name="fade"><span v-if="!emailCopied" class="emoji-dot">{{ currentEmoji }}</span></Transition></span>
+                <span class="email-line">Feel free to <Transition name="fade" mode="out-in"><a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">e-mail me</a><span v-else key="copied" class="items-italic">e-mail copied</span></Transition></span>
             </p>
         </Transition>
         <Transition name="fade" mode="out-in">
