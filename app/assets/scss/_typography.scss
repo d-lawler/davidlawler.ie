@@ -9,9 +9,9 @@
 
 .email-line {
   display: inline-block;
-  margin-top: 0.5em;
 
   @media (max-width: 768px) {
+    margin-top: 0.5em;
     position: fixed;
     bottom: calc($grid-gutter - 10px + 1.5em);
     left: 10px;
