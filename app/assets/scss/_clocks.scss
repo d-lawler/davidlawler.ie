@@ -11,6 +11,7 @@
   right: $grid-margin;
 
   @media (max-width: 768px) {
+    font-size: 14px;
     left: 10px;
     right: 10px;
   }

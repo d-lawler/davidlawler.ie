@@ -11,6 +11,7 @@
   display: inline-block;
 
   @media (max-width: 768px) {
+    font-size: 14px;
     margin-top: 0.5em;
     position: fixed;
     bottom: calc($grid-gutter - 10px + 1.5em);

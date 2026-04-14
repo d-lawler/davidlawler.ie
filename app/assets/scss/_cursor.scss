@@ -1,13 +1,15 @@
 @use 'variables' as *;
 
-html {
-  cursor: none;
-}
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: none;
+  }
 
-*,
-*::before,
-*::after {
-  cursor: none;
+  *,
+  *::before,
+  *::after {
+    cursor: none;
+  }
 }
 
 .cursor {
@@ -25,5 +27,9 @@ html {
 
   &.visible {
     opacity: 1;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    display: none;
   }
 }

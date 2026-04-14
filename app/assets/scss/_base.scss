@@ -20,8 +20,4 @@ html {
 
 a {
   border-bottom: 1px solid $color-text;
-
-  @media (max-width: 768px) {
-    border-bottom: none;
-  }
 }
