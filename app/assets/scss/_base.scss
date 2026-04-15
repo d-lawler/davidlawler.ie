@@ -21,3 +21,12 @@ html {
 a {
   border-bottom: 1px solid $color-text;
 }
+
+.app-root {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &.fonts-ready {
+    opacity: 1;
+  }
+}

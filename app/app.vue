@@ -2,6 +2,7 @@
 const cursorX = ref(0)
 const cursorY = ref(0)
 const cursorVisible = ref(false)
+const fontsReady = ref(false)
 
 onMounted(() => {
     cursorX.value = window.innerWidth / 2
@@ -17,10 +18,20 @@ onMounted(() => {
         cursorX.value = e.clientX
         cursorY.value = e.clientY
     })
+
+    const reveal = () => { fontsReady.value = true }
+    if (document.fonts?.ready) {
+        document.fonts.ready.then(reveal)
+        setTimeout(reveal, 2000)
+    } else {
+        reveal()
+    }
 })
 </script>
 
 <template>
   <div class="cursor" :class="{ visible: cursorVisible }" :style="{ left: `${cursorX}px`, top: `${cursorY}px` }" />
-  <NuxtPage />
+  <div class="app-root" :class="{ 'fonts-ready': fontsReady }">
+    <NuxtPage />
+  </div>
 </template>
