@@ -45,7 +45,7 @@ async function copyEmail() {
         <Transition name="fade" mode="out-in">
             <p v-if="!showSecond" key="first">David Lawler</p>
             <p v-else key="second">
-                Creative Director and Technologist, working across Identity, and Digital Experience, for international clients in the Arts, Culture, and
+                Creative Director and Technologist, working across Identity and Digital Experience, for international clients in Arts, Culture, and
                 Technology sectors. Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>, always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.<br>
                 <span class="email-line">Feel free to <Transition name="fade" mode="out-in"><a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">email me</a><span v-else key="copied" class="items-italic">email copied</span></Transition></span>
             </p>
