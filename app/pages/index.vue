@@ -27,6 +27,7 @@ function formatCity(timeZone: string) {
 
 const london = computed(() => formatCity('Europe/London'))
 const dublin = computed(() => formatCity('Europe/Dublin'))
+const leixlip = computed(() => formatCity('Europe/Dublin'))
 
 
 const emailCopied = ref(false)
@@ -45,8 +46,7 @@ async function copyEmail() {
         <Transition name="fade" mode="out-in">
             <p v-if="!showSecond" key="first">David Lawler</p>
             <p v-else key="second">
-                Creative Director and Technologist, working across Identity and Digital Experience, with emerging
-                technologies, with international clients across the cultural sector.
+                Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience, with emerging technologies.
                 Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>,
                 always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.<br>
                 
@@ -71,7 +71,7 @@ async function copyEmail() {
                 </div>
                 <div class="clock-row">
                     <span class="clock-city"><span class="full">Leixlip</span><span class="abbr">LXP</span></span>
-                    <span class="clock-time">{{ dublin.time }}</span>
+                    <span class="clock-time">{{ leixlip.time }}</span>
                 </div>
             </div>
         </Transition>
