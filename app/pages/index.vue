@@ -48,15 +48,18 @@ async function copyEmail() {
             <p v-else key="second">
                 Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience, with emerging technologies.
                 Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>,
-                always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.<br>
-                
-                <span class="email-line">Feel free to 
-                    <Transition name="fade" mode="out-in"><a v-if="!emailCopied"
-                            key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">email me</a><span
-                            v-else key="copied" class="items-italic">email copied</span>
-                    </Transition>
-                </span>
+                always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.
             </p>
+        </Transition>
+        <Transition name="fade" mode="out-in">
+            <div v-if="!showSecond" key="first" class="email-line">&nbsp;</div>
+            <div v-else key="second" class="email-line">
+                Feel free to
+                <Transition name="fade" mode="out-in"><a v-if="!emailCopied" key="email"
+                        href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">email me</a><span v-else
+                        key="copied" class="items-italic">email copied</span>
+                </Transition>
+            </div>
         </Transition>
         <Transition name="fade" mode="out-in">
             <div v-if="!showSecond" key="first" class="clocks">&nbsp;</div>
