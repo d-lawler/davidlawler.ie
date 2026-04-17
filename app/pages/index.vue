@@ -46,9 +46,8 @@ async function copyEmail() {
         <Transition name="fade" mode="out-in">
             <p v-if="!showSecond" key="first">David Lawler</p>
             <p v-else key="second">
-                Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience, with a focus on emerging technologies.
-                Currently at Google Brand Studio, EMEA <span class="items-italic">(via YunoJuno)</span>,
-                always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.
+                Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience.
+                Currently at Google Brand Studio, EMEA. Always at <a href="https://www.r-a-d.website">Research&nbsp;and&nbsp;Destroy</a>.
             </p>
         </Transition>
         <Transition name="fade" mode="out-in">

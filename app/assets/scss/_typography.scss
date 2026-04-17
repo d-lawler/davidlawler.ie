@@ -13,9 +13,13 @@
   bottom: calc($grid-gutter - 10px + 1em);
   left: $grid-margin;
 
+  a {
+    border-bottom: 0.5px solid $color-text;
+  }
+
   @media (max-width: 768px) {
     font-size: 16px;
-    bottom: calc($grid-gutter - 10px + 1em);
+    bottom: calc($grid-gutter - 10px + 1em + 5px);
     left: 10px;
   }
 }
