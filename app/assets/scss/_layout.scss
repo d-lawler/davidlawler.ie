@@ -1,7 +1,7 @@
 @use 'variables' as *;
 
 .container {
-  height: 100dvh;
+  height: var(--app-height, 100dvh);
   display: flex;
   flex-direction: column;
   padding: calc($grid-gutter - 10px) $grid-gutter calc($grid-gutter - 10px);

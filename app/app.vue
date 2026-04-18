@@ -5,6 +5,15 @@ const cursorVisible = ref(false)
 const fontsReady = ref(false)
 
 onMounted(() => {
+    const setAppHeight = () => {
+        const h = window.visualViewport?.height ?? window.innerHeight
+        document.documentElement.style.setProperty('--app-height', `${h}px`)
+    }
+    setAppHeight()
+    window.visualViewport?.addEventListener('resize', setAppHeight)
+    window.addEventListener('resize', setAppHeight)
+    window.addEventListener('orientationchange', setAppHeight)
+
     cursorX.value = window.innerWidth / 2
     cursorY.value = window.innerHeight / 2
 
