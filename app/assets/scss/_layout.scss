@@ -4,9 +4,9 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  padding: calc($grid-gutter - 10px) $grid-gutter 0;
+  padding: calc($grid-gutter - 10px) $grid-gutter calc($grid-gutter - 10px);
 
   @media (max-width: 768px) {
-    padding: 10px 10px 0;
+    padding: 10px 10px 10px;
   }
 }

@@ -5,15 +5,9 @@
   display: flex;
   align-items: baseline;
   gap: 0.5em;
-  position: fixed;
-  bottom: calc($grid-gutter - 10px);
-  left: $grid-margin;
-  right: $grid-margin;
 
   @media (max-width: 768px) {
     font-size: 16px;
-    left: 10px;
-    right: 10px;
   }
 }
 
