@@ -6,6 +6,12 @@
   padding: 0;
 }
 
+html,
+body {
+  overscroll-behavior: none;
+  touch-action: pan-y;
+}
+
 html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
@@ -13,7 +19,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
   line-height: inherit;
   -webkit-font-smoothing: antialiased;
 }
