@@ -25,6 +25,10 @@ $dial-height: 120px;
   font-size: 10px;
   line-height: 1;
   white-space: nowrap;
+  // Hidden until the intro finishes; GSAP brings it in.
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px);
 
   &::before {
     content: '';

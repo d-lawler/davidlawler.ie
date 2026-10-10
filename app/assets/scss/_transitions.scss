@@ -10,13 +10,32 @@
   opacity: 0;
 }
 
-// Quicker fade for copy swapped by the pretentiousness slider.
-.swap-enter-active,
-.swap-leave-active {
-  transition: opacity 0.2s ease;
+
+// Bio morph between pretentiousness levels, animated with GSAP in
+// pages/index.vue. Words are inline blocks so they can be transformed.
+.morph {
+  position: relative;
+  perspective: 600px;
 }
 
-.swap-enter-from,
-.swap-leave-to {
-  opacity: 0;
+.word,
+.ghost,
+.char {
+  display: inline-block;
+}
+
+.word,
+.ghost {
+  white-space: pre;
+}
+
+// Departing words are cloned in here and faded out where they stood.
+.ghosts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  .ghost {
+    position: absolute;
+  }
 }
