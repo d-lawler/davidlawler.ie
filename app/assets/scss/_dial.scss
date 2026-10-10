@@ -1,0 +1,98 @@
+@use 'variables' as *;
+
+$dial-height: 120px;
+
+// Keep the bottom of the page clear of the floating dial.
+.container {
+  padding-bottom: calc($dial-height + env(safe-area-inset-bottom));
+}
+
+// Full-width glass band along the bottom of the viewport. The blur and a 2%
+// black tint both fade out upwards so the band melts into the text above.
+.dial {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: calc($dial-height + env(safe-area-inset-bottom));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.02), transparent);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    mask-image: linear-gradient(to top, #000 40%, transparent);
+    -webkit-mask-image: linear-gradient(to top, #000 40%, transparent);
+    pointer-events: none;
+  }
+}
+
+.dial-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+.dial-range {
+  --track: 1px;
+  --thumb: 10px;
+
+  appearance: none;
+  background: transparent;
+  width: min(180px, 60vw);
+  height: 14px;
+  margin: 0;
+
+  &::-webkit-slider-runnable-track {
+    height: var(--track);
+    background: linear-gradient(to right, $color-text var(--fill, 0%), rgba(0, 0, 0, 0.15) var(--fill, 0%));
+  }
+
+  &::-moz-range-track {
+    height: var(--track);
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  &::-moz-range-progress {
+    height: var(--track);
+    background: $color-text;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--thumb);
+    height: var(--thumb);
+    margin-top: calc((var(--track) - var(--thumb)) / 2);
+    border-radius: 50%;
+    background: $color-text;
+  }
+
+  &::-moz-range-thumb {
+    width: var(--thumb);
+    height: var(--thumb);
+    border: 0;
+    border-radius: 50%;
+    background: $color-text;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+    }
+  }
+}

@@ -9,3 +9,14 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+// Quicker fade for copy swapped by the pretentiousness slider.
+.swap-enter-active,
+.swap-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.swap-enter-from,
+.swap-leave-to {
+  opacity: 0;
+}
