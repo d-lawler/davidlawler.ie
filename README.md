@@ -10,7 +10,7 @@ Most text transitions fade one block out and the next one in. This one treats
 the copy as a sequence of words and works out what actually changed.
 
 1. **Tokenise.** [`app/utils/morph.ts`](app/utils/morph.ts) splits each version
-   of the copy into word tokens. Links are tokens too (`{rad}` and `{email}`
+   of the copy into word tokens. Links are tokens too (`{work}`, `{code}` and `{email}`
    placeholders in the source string), so they travel with the text.
 2. **Diff.** `morph()` runs a longest-common-subsequence match between the
    current words and the next ones. Words found in both keep their id, so Vue

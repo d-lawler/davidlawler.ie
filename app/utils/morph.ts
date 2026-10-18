@@ -2,11 +2,13 @@
 // words shared between versions keep their identity (and stay on screen)
 // while only the new words animate in.
 
-export type TokenKind = 'text' | 'rad' | 'email'
+export type TokenKind = 'text' | 'link' | 'email'
 
 export interface Token {
     kind: TokenKind
     text: string
+    // Where a link token points.
+    href?: string
     // Whether a space follows this token.
     space: boolean
     // Text glued to the end of a link token (e.g. a full stop), so it
@@ -24,13 +26,22 @@ export interface KeyedToken extends Token {
 
 let nextId = 0
 
-// `{rad}` and `{email}` mark link tokens; their display text is supplied.
-export function tokenize(source: string, links: Record<'rad' | 'email', string>): Token[] {
+export interface Link {
+    text: string
+    // Omit for the email link, which copies the address instead of navigating.
+    href?: string
+}
+
+// `{name}` placeholders in the copy become link tokens, using `links[name]`.
+// A link without an href is the email link.
+export function tokenize(source: string, links: Record<string, Link> = {}): Token[] {
     const tokens: Token[] = []
-    for (const part of source.split(/(\{rad\}|\{email\})/)) {
-        if (part === '{rad}' || part === '{email}') {
-            const kind = part === '{rad}' ? 'rad' : 'email'
-            tokens.push({ kind, text: links[kind], space: false })
+    for (const part of source.split(/(\{\w+\})/)) {
+        const link = /^\{(\w+)\}$/.test(part) ? links[part.slice(1, -1)] : undefined
+        if (link) {
+            tokens.push(link.href
+                ? { kind: 'link', text: link.text, href: link.href, space: false }
+                : { kind: 'email', text: link.text, space: false })
             continue
         }
         for (const chunk of part.split(/(\s+)/)) {
@@ -52,7 +63,7 @@ export function tokenize(source: string, links: Record<'rad' | 'email', string>)
 }
 
 function same(a: Token, b: Token) {
-    return a.kind === b.kind && a.text === b.text && a.suffix === b.suffix
+    return a.kind === b.kind && a.text === b.text && a.href === b.href && a.suffix === b.suffix
 }
 
 // Longest-common-subsequence match: tokens in `next` that line up with

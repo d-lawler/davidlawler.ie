@@ -7,11 +7,11 @@ useHead({
     title: 'David Lawler',
 })
 
-const bio = 'Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience. Currently at Google Brand Studio, EMEA. Always at {rad}. Feel free to {email}.'
+const bio = 'Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience. Currently at Google Brand Studio, EMEA. Always at Research and Destroy. Feel free to {work}, {code}, or {email}.'
 
 const emailCopied = ref(false)
 
-const email = 'david@davidlawler.ie'
+const email = 'email@r-a-d.website'
 
 // Copy the address, or open the mail app where the clipboard isn't
 // available (in-app browsers, insecure contexts, denied permission).
@@ -33,7 +33,7 @@ const ghostsEl = ref<HTMLElement>()
 
 // The page opens on the name alone, then morphs into the bio. Fixed ids keep
 // server and client renders identical.
-const words = ref<KeyedToken[]>(tokenize('David Lawler', { rad: '', email: '' })
+const words = ref<KeyedToken[]>(tokenize('David Lawler')
     .map((t, i) => ({ ...t, id: -1 - i, fresh: true, order: i })))
 
 let reducedMotion = false
@@ -177,7 +177,11 @@ async function show(tokens: Token[]) {
 
 // Morph the name into the bio.
 function revealBio() {
-    show(tokenize(bio, { rad: 'Research and Destroy', email: 'email me' }))
+    show(tokenize(bio, {
+        work: { text: 'see work', href: 'https://r-a-d.website' },
+        code: { text: 'see code', href: 'https://github.com/d-lawler' },
+        email: { text: 'email me' },
+    }))
 }
 
 // Animate the name in once the fonts are ready (or after 2s, matching the
@@ -217,7 +221,7 @@ onMounted(() => {
                 :class="{ fresh: word.fresh }"
                 :data-id="word.id"
             >
-                <template v-if="word.kind === 'rad'"><a href="https://www.r-a-d.website">{{ word.text }}</a>{{ word.suffix }}</template>
+                <template v-if="word.kind === 'link'"><a :href="word.href">{{ word.text }}</a>{{ word.suffix }}</template>
                 <template v-else-if="word.kind === 'email'"><Transition name="fade" mode="out-in">
                     <a v-if="!emailCopied" key="email" :href="`mailto:${email}`" @click.prevent="copyEmail">{{ word.text }}</a>
                     <span v-else key="copied" class="items-italic">email copied</span>
