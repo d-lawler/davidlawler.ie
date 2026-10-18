@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 # Pulls the licensed webfonts from the private d-lawler/d-lawler-fonts repo
 # into public/fonts before a build. The fonts are not in this repo.
+# Only the files referenced in app/assets/scss/_fonts.scss are copied.
 set -e
 DEST="public/fonts"
-TMP="$(mktemp -d)"
+FONTS=$(grep -oE "/fonts/[A-Za-z0-9_-]+\.woff2" app/assets/scss/_fonts.scss | sed 's#/fonts/##' | sort -u)
 
 if [ -z "$FONTS_TOKEN" ]; then
   if ls "$DEST"/*.woff2 >/dev/null 2>&1; then
@@ -14,8 +15,9 @@ if [ -z "$FONTS_TOKEN" ]; then
   exit 0
 fi
 
+TMP="$(mktemp -d)"
 git clone --quiet --depth 1 "https://x-access-token:${FONTS_TOKEN}@github.com/d-lawler/d-lawler-fonts.git" "$TMP"
 mkdir -p "$DEST"
-cp "$TMP"/*.woff2 "$DEST"/
+for f in $FONTS; do cp "$TMP/$f" "$DEST/"; done
 rm -rf "$TMP"
-echo "fetch-fonts: installed $(ls "$DEST"/*.woff2 | wc -l | tr -d ' ') fonts"
+echo "fetch-fonts: installed $(echo "$FONTS" | wc -l | tr -d ' ') fonts"
