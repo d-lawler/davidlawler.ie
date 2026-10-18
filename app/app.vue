@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="cursor" :class="{ visible: cursorVisible }" :style="{ left: `${cursorX}px`, top: `${cursorY}px` }" />
+  <div class="cursor" :class="{ visible: cursorVisible }" :style="{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)` }" />
   <div class="app-root" :class="{ 'fonts-ready': fontsReady }">
     <NuxtPage />
   </div>

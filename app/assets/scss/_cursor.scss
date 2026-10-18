@@ -20,8 +20,10 @@
   background-color: #fff;
   pointer-events: none;
   mix-blend-mode: difference;
+  top: 0;
+  left: 0;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  will-change: transform;
   opacity: 0;
   transition: opacity 0.3s ease;
 

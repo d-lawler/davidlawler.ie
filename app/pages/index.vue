@@ -11,8 +11,17 @@ const bio = 'Creative Director and Technologist, working with international clie
 
 const emailCopied = ref(false)
 
+const email = 'david@davidlawler.ie'
+
+// Copy the address, or open the mail app where the clipboard isn't
+// available (in-app browsers, insecure contexts, denied permission).
 async function copyEmail() {
-    await navigator.clipboard.writeText('david@davidlawler.ie')
+    try {
+        await navigator.clipboard.writeText(email)
+    } catch {
+        window.location.href = `mailto:${email}`
+        return
+    }
     emailCopied.value = true
     setTimeout(() => {
         emailCopied.value = false
@@ -210,7 +219,7 @@ onMounted(() => {
             >
                 <template v-if="word.kind === 'rad'"><a href="https://www.r-a-d.website">{{ word.text }}</a>{{ word.suffix }}</template>
                 <template v-else-if="word.kind === 'email'"><Transition name="fade" mode="out-in">
-                    <a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">{{ word.text }}</a>
+                    <a v-if="!emailCopied" key="email" :href="`mailto:${email}`" @click.prevent="copyEmail">{{ word.text }}</a>
                     <span v-else key="copied" class="items-italic">email copied</span>
                 </Transition>{{ word.suffix }}</template>
                 <template v-else-if="word.fresh && entranceFor.get(word.id)?.chars">
