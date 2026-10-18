@@ -1,0 +1,25 @@
+{
+  "name": "dl",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fonts": "sh scripts/fetch-fonts.sh",
+    "dev": "nuxt dev",
+    "build": "pnpm fonts && nuxt build",
+    "generate": "pnpm fonts && nuxt generate",
+    "preview": "nuxt preview",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "nuxt": "^3.17.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.4.0",
+    "sass-embedded": "^1.99.0",
+    "typescript": "^5.8.0"
+  }
+}

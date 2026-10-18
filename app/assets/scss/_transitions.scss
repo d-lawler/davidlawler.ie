@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// Name-to-bio morph, animated with GSAP in pages/index.vue. Words are inline
+// blocks so they can be transformed.
+.morph {
+  position: relative;
+  perspective: 600px;
+}
+
+.word,
+.ghost,
+.char {
+  display: inline-block;
+}
+
+.word,
+.ghost {
+  white-space: pre;
+}
+
+// Departing words are cloned in here and animated out where they stood.
+.ghosts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  .ghost {
+    position: absolute;
+  }
+}
+
+// Visually hidden, still read by screen readers.
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,43 @@
+// Neue Haas Display
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('/fonts/NeueHaasDisplayLight.woff2') format('woff2');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('/fonts/NeueHaasDisplayRoman.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Items
+
+@font-face {
+  font-family: 'Items';
+  src: url('/fonts/Items-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Items';
+  src: url('/fonts/Items-ThinItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Items Mono';
+  src: url('/fonts/Items-Monospaced.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

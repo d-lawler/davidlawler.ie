@@ -1,0 +1,29 @@
+# Licensed fonts (pulled at build time by scripts/fetch-fonts.sh)
+public/fonts/
+
+# Nuxt
+.nuxt
+.output
+dist
+
+# Dependencies
+node_modules
+
+# Logs
+*.log
+
+# Env
+.env
+
+# Claude
+.claude
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
