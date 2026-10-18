@@ -9,6 +9,9 @@ export interface Token {
     text: string
     // Whether a space follows this token.
     space: boolean
+    // Text glued to the end of a link token (e.g. a full stop), so it
+    // stays on the same line as the link.
+    suffix?: string
 }
 
 export interface KeyedToken extends Token {
@@ -36,7 +39,12 @@ export function tokenize(source: string, links: Record<'rad' | 'email', string>)
                 const last = tokens[tokens.length - 1]
                 if (last) last.space = true
             } else {
-                tokens.push({ kind: 'text', text: chunk, space: false })
+                const last = tokens[tokens.length - 1]
+                if (last && last.kind !== 'text' && !last.space) {
+                    last.suffix = (last.suffix ?? '') + chunk
+                } else {
+                    tokens.push({ kind: 'text', text: chunk, space: false })
+                }
             }
         }
     }
@@ -44,7 +52,7 @@ export function tokenize(source: string, links: Record<'rad' | 'email', string>)
 }
 
 function same(a: Token, b: Token) {
-    return a.kind === b.kind && a.text === b.text
+    return a.kind === b.kind && a.text === b.text && a.suffix === b.suffix
 }
 
 // Longest-common-subsequence match: tokens in `next` that line up with

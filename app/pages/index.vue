@@ -208,11 +208,11 @@ onMounted(() => {
                 :class="{ fresh: word.fresh }"
                 :data-id="word.id"
             >
-                <a v-if="word.kind === 'rad'" href="https://www.r-a-d.website">{{ word.text }}</a>
-                <Transition v-else-if="word.kind === 'email'" name="fade" mode="out-in">
+                <template v-if="word.kind === 'rad'"><a href="https://www.r-a-d.website">{{ word.text }}</a>{{ word.suffix }}</template>
+                <template v-else-if="word.kind === 'email'"><Transition name="fade" mode="out-in">
                     <a v-if="!emailCopied" key="email" href="mailto:david@davidlawler.ie" @click.prevent="copyEmail">{{ word.text }}</a>
                     <span v-else key="copied" class="items-italic">email copied</span>
-                </Transition>
+                </Transition>{{ word.suffix }}</template>
                 <template v-else-if="word.fresh && entranceFor.get(word.id)?.chars">
                     <!-- Letters are for the animation; screen readers get the whole word. -->
                     <span aria-hidden="true"><span v-for="(char, c) in word.text" :key="c" class="char">{{ char }}</span></span>
