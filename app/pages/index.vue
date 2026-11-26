@@ -7,11 +7,11 @@ useHead({
     title: 'David Lawler',
 })
 
-const bio = 'Creative Director and Technologist, working with international clients across the cultural sector, on Identity and Digital Experience. Currently at Google Brand Studio, EMEA. Always at Research and Destroy. Feel free to {work}, {code}, or {email}.'
+const bio = 'Creative Technologist, working with international clients across the cultural sector, on Identity and Digital Experience. Currently freelance Associate Creative Director at Google Brand Studio, EMEA. Always at {rad}. {work}, {code}, {universe}, {bored}, {email}.'
 
 const emailCopied = ref(false)
 
-const email = 'email@r-a-d.website'
+const email = 'david@davidlawler.ie'
 
 // Copy the address, or open the mail app where the clipboard isn't
 // available (in-app browsers, insecure contexts, denied permission).
@@ -70,6 +70,7 @@ const entrances: Entrance[] = [
 ]
 
 const wholeWordEntrances = entrances.filter(e => !e.chars)
+const letterEntrances = entrances.filter(e => e.chars)
 
 function pick<T>(list: T[]) {
     return list[Math.floor(Math.random() * list.length)]!
@@ -106,8 +107,10 @@ function enter(tl: gsap.core.Timeline, el: HTMLElement, entrance: Entrance, dura
 
 // Morph the paragraph to `tokens`: departing words leave where they stood,
 // words both versions share glide to their new positions (Flip), and new
-// words arrive with randomised entrances.
-async function show(tokens: Token[]) {
+// words arrive with randomised entrances. `brisk` is for the way out: the
+// new words come quickly and always letter by letter, which is how the
+// header draws the name it is about to take over. Resolves when it is done.
+async function show(tokens: Token[], brisk = false) {
     const el = morphEl.value
     const ghosts = ghostsEl.value
     if (!el || !ghosts) return
@@ -138,7 +141,7 @@ async function show(tokens: Token[]) {
     entranceFor.clear()
     for (const token of next) {
         if (!token.fresh) continue
-        const pool = token.kind === 'text' && token.text.length > 1 ? entrances : wholeWordEntrances
+        const pool = brisk ? letterEntrances : token.kind === 'text' && token.text.length > 1 ? entrances : wholeWordEntrances
         entranceFor.set(token.id, pick(pool))
     }
 
@@ -171,15 +174,23 @@ async function show(tokens: Token[]) {
     // straight away), then each arrives on its own random beat.
     for (const wordEl of el.querySelectorAll<HTMLElement>(':scope > .word.fresh')) {
         const entrance = entranceFor.get(Number(wordEl.dataset.id))
-        if (entrance) enter(tl, wordEl, entrance, random(0.6, 1.1), random(0.15, 0.75))
+        if (!entrance) continue
+        if (brisk) enter(tl, wordEl, entrance, random(0.5, 0.7), random(0.1, 0.3))
+        else enter(tl, wordEl, entrance, random(0.6, 1.1), random(0.15, 0.75))
     }
+
+    if (tl.duration()) await new Promise<void>((resolve) => { tl.eventCallback('onComplete', resolve) })
 }
 
 // Morph the name into the bio.
 function revealBio() {
+    if (leaving) return
     show(tokenize(bio, {
-        work: { text: 'see work', href: 'https://r-a-d.website' },
+        rad: { text: 'Research and Destroy', href: 'https://r-a-d.website' },
+        work: { text: 'See visuals', href: '/visuals' },
         code: { text: 'see code', href: 'https://github.com/d-lawler' },
+        universe: { text: 'see the future', href: '/universe' },
+        bored: { text: 'be bored', href: '/info' },
         email: { text: 'email me' },
     }))
 }
@@ -204,16 +215,49 @@ async function playIntro() {
     }
 }
 
+// The header carries the name between pages. Arriving from another page it
+// is already showing "David Lawler" exactly where this page draws it, so
+// there is no entrance: wait for the header and the page to settle, take the
+// name back, then morph into the bio.
+const header = useSiteHeader()
+let leaving = false
+
+// Only one of them draws the name at a time: while the header has it, this
+// page's own text is out of sight, or the two would show through each other.
+const handedOver = ref(header.name.value !== 'hidden')
+
+async function takeName() {
+    await Promise.all([
+        header.whenGrown(),
+        new Promise(resolve => setTimeout(resolve, 1500)),
+    ])
+    if (leaving) return
+    header.name.value = 'hidden'
+    handedOver.value = false
+    gsap.delayedCall(0.5, revealBio)
+}
+
+// Leaving for another page, the text first settles back on the name, which
+// is handed to the header to shrink into "DL".
+onBeforeRouteLeave(async () => {
+    leaving = true
+    if (!reducedMotion) await show(tokenize('David Lawler'), true)
+    header.name.value = 'name'
+    handedOver.value = true
+    await nextTick()
+})
+
 onMounted(() => {
     gsap.registerPlugin(Flip)
     reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    playIntro()
+    if (header.name.value === 'hidden') playIntro()
+    else takeName()
 })
 </script>
 
 <template>
     <div class="container">
-        <p ref="morphEl" class="morph">
+        <p ref="morphEl" class="morph" :style="{ visibility: handedOver ? 'hidden' : undefined }">
             <span
                 v-for="word in words"
                 :key="word.id"
@@ -221,7 +265,7 @@ onMounted(() => {
                 :class="{ fresh: word.fresh }"
                 :data-id="word.id"
             >
-                <template v-if="word.kind === 'link'"><a :href="word.href">{{ word.text }}</a>{{ word.suffix }}</template>
+                <template v-if="word.kind === 'link'"><NuxtLink :to="word.href" :target="word.href?.startsWith('http') ? '_blank' : undefined" :class="{ shimmer: word.href === '/universe' }">{{ word.text }}</NuxtLink>{{ word.suffix }}</template>
                 <template v-else-if="word.kind === 'email'"><Transition name="fade" mode="out-in">
                     <a v-if="!emailCopied" key="email" :href="`mailto:${email}`" @click.prevent="copyEmail">{{ word.text }}</a>
                     <span v-else key="copied" class="items-italic">email copied</span>

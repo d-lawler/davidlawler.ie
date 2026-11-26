@@ -43,4 +43,5 @@ onMounted(() => {
   <div class="app-root" :class="{ 'fonts-ready': fontsReady }">
     <NuxtPage />
   </div>
+  <SiteHeader class="app-root" :class="{ 'fonts-ready': fontsReady }" />
 </template>
