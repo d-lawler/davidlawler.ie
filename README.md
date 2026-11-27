@@ -43,16 +43,24 @@ pnpm lint
 pnpm typecheck
 ```
 
+## Visuals
+
+The `/visuals` page floats images and short video loops from `public/visuals-media/`. They are made from larger sources kept outside the repo, in `visuals-assets/`, by `python3 scripts/build-visuals.py` (needs ImageMagick and ffmpeg), which also writes the list in `app/utils/visuals.ts`.
+
 ## Fonts
 
 The site is set in Neue Haas Display and Items, used under their own licences.
 They are not in this repo and not covered by its MIT licence.
 
 `pnpm build` and `pnpm generate` run `scripts/fetch-fonts.sh` first, which
-copies them in from a private repo when a `FONTS_TOKEN` is set (as it is on
+copies them in from a private repo when a `FONTS_TOKEN2` is set (as it is on
 the host). Without it the site builds with fallback fonts. To use your own,
 put `.woff2` files in `public/fonts/` with the names `app/assets/scss/_fonts.scss` expects.
 
 ## Licence
 
-Code is [MIT](LICENSE). The fonts and the written copy are not covered.
+Code is [MIT](LICENSE). The fonts, the written copy, and the images and videos in `public/visuals-media/` are not covered.
+
+## Credits
+
+The `/universe` page uses star positions, distances, motions and colours from the [HYG Database](https://codeberg.org/astronexus/hyg) v4.1 by David Nash, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). `public/data/stars.json` is a reduced copy (stars to magnitude 6.7, made with `scripts/reduce-stars.py`) and is shared under the same licence. Planet positions are computed from JPL's published orbital elements.

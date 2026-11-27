@@ -15,9 +15,42 @@ html {
   }
 }
 
+// While /universe is open the whole document is black, so nothing light shows
+// around the canvas (notch, rounded corners, overscroll).
+html {
+  transition: background-color 0.6s ease;
+
+  &.universe-open {
+    background-color: #000;
+    // No scrolling, so no scrollbar or rubber-band edge can show beside the canvas.
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+}
+
+// Selected text is white on blue, everywhere.
 ::selection {
-  background-color: $color-text;
-  color: $color-bg;
+  background-color: #00f;
+  color: #fff;
+}
+
+// Nothing draws a ring when it is focused, or flashes when it is tapped.
+*:focus,
+*:focus-visible {
+  outline: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Nothing shows a scrollbar; what scrolls still scrolls.
+* {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 a {

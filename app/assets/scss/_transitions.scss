@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 .fade-enter-active,
@@ -8,6 +9,25 @@
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+// Between pages: the old one blurs away, the new one comes into focus.
+.page-leave-active {
+  transition: opacity 0.6s ease, filter 0.6s ease;
+}
+
+.page-enter-active {
+  transition: opacity 1.4s ease, filter 1.4s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(24px);
+
+  @media (prefers-reduced-motion: reduce) {
+    filter: none;
+  }
 }
 
 // Name-to-bio morph, animated with GSAP in pages/index.vue. Words are inline
@@ -47,4 +67,36 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+// A wash of blue that drifts across the link to /universe every 10 seconds,
+// thinning to violet behind it.
+.shimmer {
+  background: linear-gradient(
+    120deg,
+    $color-text 26%,
+    color.mix(#80f, $color-text, 14%) 36%,
+    color.mix(#00f, $color-text, 38%) 47%,
+    color.mix(#00f, $color-text, 62%) 58%,
+    $color-text 68%
+  ) 100% 0 / 400% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 10s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  52%,
+  100% {
+    background-position: 0 0;
+  }
 }
